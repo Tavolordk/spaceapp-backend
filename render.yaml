@@ -1,0 +1,15 @@
+# render.yaml
+services:
+  - type: web
+    name: spaceapp-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run dev
+    envVars:
+      - key: MONGO_URI
+        fromEnv: MONGO_URI
+      - key: GMAIL_USER
+        fromEnv: GMAIL_USER
+      - key: GMAIL_PASS
+        fromEnv: GMAIL_PASS
