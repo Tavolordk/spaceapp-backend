@@ -5,9 +5,9 @@ import axios from "axios";
 
 export const crearRegistro = async (req: Request, res: Response) => {
   try {
-const { nombre, correo, telefono, lugar, institucion, edad, rol, captchaToken } = req.body;
+const { nombre, correo, telefono, lugar, institucion, edad, rol, captcha } = req.body;
 
-    if (!captchaToken) {
+    if (!captcha) {
       return res.status(400).json({ error: "Captcha no enviado" });
     }
 
@@ -16,11 +16,12 @@ const { nombre, correo, telefono, lugar, institucion, edad, rol, captchaToken } 
       captchaVerifyUrl,
       new URLSearchParams({
         secret: process.env.RECAPTCHA_SECRET || "",
-        response: captchaToken,
+        response: captcha,
       })
     );
 
     const captchaData = captchaResponse.data;
+console.log("captchaData:", captchaData);
 
 if (!captchaData.success || captchaData.score < 0.3) {
   return res.status(403).json({ error: "Captcha inválido o score bajo", score: captchaData.score });
