@@ -23,9 +23,10 @@ const { nombre, correo, telefono, lugar, institucion, edad, rol, captcha } = req
     const captchaData = captchaResponse.data;
 console.log("captchaData:", captchaData);
 
-if (!captchaData.success || captchaData.score < 0.3) {
-  return res.status(403).json({ error: "Captcha inválido o score bajo", score: captchaData.score });
+if (!captchaData.success) {
+  return res.status(403).json({ error: "Captcha inválido", score: captchaData.score });
 }
+
 
     const nuevoRegistro = new Registro({ nombre, correo, telefono, lugar, institucion, edad, rol });
     await nuevoRegistro.save();
